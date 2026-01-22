@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPUELLES | Asesorías 1 a 1 - Men's Physique WNBF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #ff0000, #b30000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-image {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #ff0000, #cc0000);
+            color: #ffffff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+        }
+
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            border-radius: 0.75rem !important;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #ff0000 !important;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.1);
+        }
+
+        .section-tag-gold {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1));
+            color: #ffcc33;
+            border: 1px solid rgba(255, 165, 0, 0.4);
+            text-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+        }
+
+        .custom-checkbox {
+            width: 1.2rem;
+            height: 1.2rem;
+            accent-color: #ff0000;
+            cursor: pointer;
+        }
+
+        .content-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 1.25rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Carrusel Styles */
+        .carousel-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            border-radius: 1.25rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .carousel-slide {
+            min-width: 100%;
+        }
+        .carousel-slide img {
+            width: 100%;
+            display: block;
+            border-radius: 1.25rem;
+        }
+
+        /* Avatar Footer */
+        .footer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff0000;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        /* Galería Estilos */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 0.75rem;
+        }
+        .gallery-item img {
+            transition: all 0.5s ease;
+        }
+        .gallery-item:hover img {
+            filter: grayscale(100%) brightness(40%);
+            transform: scale(1.05);
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+            text-align: center;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* Visor de imagen (Lightbox) */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #lightbox.active {
+            display: flex;
+        }
+        .lightbox-img-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 80vh;
+        }
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 0.5rem;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="text-xl font-black tracking-tighter uppercase italic">
+                <span class="text-white">JP</span><span class="text-red-600">UELLES</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-gray-400">
+                <a href="#metodo" class="hover:text-white transition">Metodología</a>
+                <a href="#servicios" class="hover:text-white transition">Servicios</a>
+                <a href="#aplicar" class="hover:text-white transition">Aplicar</a>
+            </div>
+            <a href="#aplicar" class="btn-primary px-6 py-2 rounded-full font-bold text-xs uppercase tracking-tighter">
+                Unirme al Team
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden px-4">
+        <div class="absolute inset-0 hero-image"></div>
+        <div class="relative z-10 text-center max-w-4xl">
+            <span class="inline-block section-tag-gold px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.3em] mb-6">
+                COMPETIDOR MEN'S PHYSIQUE WNBF
+            </span>
+            <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight uppercase italic">
+                LLEVA TU FÍSICO AL <span class="gradient-text">SIGUIENTE NIVEL</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light">
+                Asesorías 1 a 1 para personas que buscan la excelencia. Sin excusas, solo el método que me define como atleta en la WNBF.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#aplicar" class="btn-primary px-8 py-4 rounded-xl font-black uppercase text-sm">
+                    Quiero que seas mi preparador
+                </a>
+                <a href="#servicios" class="glass-card px-8 py-4 rounded-xl font-bold uppercase text-sm hover:bg-white/10 transition border border-white/10">
+                    Ver planes
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrusel de imágenes Superior -->
+    <div class="bg-black pt-24 px-6 text-center">
+        <div class="carousel-container mb-8">
+            <div class="carousel-track" id="carouselTrack1">
+                <div class="carousel-slide">
+                    <img src="https://i.ibb.co/fY2nvDkS/IMG-3722.jpg" alt="JPUELLES Atleta 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://i.ibb.co/1YVTGVp8/IMG-3723.jpg" alt="JPUELLES Atleta 2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://i.ibb.co/VY6dkjBF/IMG-3724.jpg" alt="JPUELLES Atleta 3">
+                </div>
+            </div>
+        </div>
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-black uppercase italic mb-4">Hola, soy <span class="text-red-600">JPUELLES</span></h2>
+            <p class="text-gray-400 text-lg leading-relaxed">
+                Competidor Men's Physique WNBF. Mi objetivo no es solo darte una rutina, es transmitirte la metodología y la disciplina que aplico día a día en el culturismo natural. Si buscas compromiso real y resultados basados en ciencia y experiencia, estás en el lugar adecuado.
+            </p>
+        </div>
+    </div>
+
+    <!-- Metodología (Pilares) -->
+    <section id="metodo" class="py-24 px-6 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 text-center">
+                <h2 class="text-4xl font-black mb-4 uppercase italic">Mi Metodología</h2>
+                <div class="h-1 w-20 bg-red-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 text-center border-red-600/30">
+                    <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-microscope text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 uppercase">Base de Evidencia</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Todo plan tiene un porqué. Aplicamos la ciencia del entrenamiento y la nutrición para maximizar tu eficiencia metabólica sin perder tiempo.
+                    </p>
+                </div>
+                <div class="glass-card p-8 text-center border-red-600/30">
+                    <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-user-check text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 uppercase">Individualización</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        No hay planes genéricos. Adaptamos el volumen, la frecuencia y los macros a tu estilo de vida, horarios y capacidad de recuperación actual.
+                    </p>
+                </div>
+                <div class="glass-card p-8 text-center border-red-600/30">
+                    <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-medal text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 uppercase">Mentalidad de Atleta</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Culturismo natural real. Te enseñaré la disciplina necesaria para exprimir tu potencial genético y alcanzar un gran físico.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrusel antes de Servicios -->
+    <div class="bg-black pt-12 px-6 text-center">
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack2">
+                <div class="carousel-slide">
+                    <img src="https://i.ibb.co/gbxgxPxn/IMG-3718.jpg" alt="JPUELLES Transformación 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://i.ibb.co/MyqYh4Df/IMG-3720.jpg" alt="JPUELLES Transformación 2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://i.ibb.co/ycVntkS8/IMG-3727.jpg" alt="JPUELLES Transformación 3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicios -->
+    <section id="servicios" class="py-24 px-6 bg-zinc-950">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black uppercase italic mb-4">Planes de Trabajo</h2>
+                <div class="h-1 w-20 bg-red-600 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="glass-card p-10 flex flex-col border-t-2 border-red-600/30">
+                    <div class="text-red-600 text-3xl mb-6"><i class="fas fa-dumbbell"></i></div>
+                    <h3 class="text-2xl font-black mb-4 uppercase">Cambio Físico Radical</h3>
+                    <p class="text-gray-400 mb-8 flex-grow">Para quienes buscan una transformación física profunda, ganancia de masa muscular o pérdida de grasa bajo el máximo rigor profesional, sin importar su punto de partida.</p>
+                    <a href="#aplicar" class="btn-primary text-center py-4 rounded-xl font-black uppercase text-xs tracking-widest shadow-lg">Saber más</a>
+                </div>
+
+                <div class="glass-card p-10 flex flex-col border-t-2 border-red-600/30">
+                    <div class="text-red-600 text-3xl mb-6"><i class="fas fa-heartbeat"></i></div>
+                    <h3 class="text-2xl font-black mb-4 uppercase">Optimización Estética</h3>
+                    <p class="text-gray-400 mb-8 flex-grow">Estrategia avanzada para pulir tu físico. Enfoque en puntos débiles, mejora de la salud metabólica y longevidad deportiva.</p>
+                    <a href="#aplicar" class="btn-primary text-center py-4 rounded-xl font-black uppercase text-xs tracking-widest shadow-lg">Saber más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Foto antes de Formulario -->
+    <div class="bg-black py-12 px-6 flex justify-center">
+        <img src="https://i.ibb.co/Pks996s/IMG-3725.jpg" alt="JPUELLES Foto" class="content-image">
+    </div>
+
+    <!-- Formulario / Aplicación -->
+    <section id="aplicar" class="py-24 px-6 bg-black">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-6xl font-black uppercase italic mb-6">
+                    ÚNETE AL <span class="gradient-text">JPUELLES TEAM</span>
+                </h2>
+                <p class="text-gray-400 italic">
+                    "Estás a un paso de entrar en mi equipo. Rellena este formulario y evaluaré tu caso personalmente."
+                </p>
+            </div>
+
+            <!-- Ajuste del borde a rojo -->
+            <div class="glass-card p-8 md:p-12 border-red-600/30">
+                <form id="teamForm" class="space-y-8">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Nombre</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3" placeholder="Tu nombre">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Qué edad tienes?</label>
+                            <input type="number" name="age" required class="w-full px-4 py-3" placeholder="Edad">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Dónde vives?</label>
+                            <input type="text" name="location" required class="w-full px-4 py-3" placeholder="Ciudad / País">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿A qué te dedicas?</label>
+                            <input type="text" name="occupation" required class="w-full px-4 py-3" placeholder="Tu profesión">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Qué objetivo tienes?</label>
+                        <input type="text" name="objective_short" required class="w-full px-4 py-3" placeholder="Ej: Ganar 5kg de masa muscular">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Qué te gustaría conseguir con la asesoría?</label>
+                        <textarea name="expectations" rows="3" class="w-full px-4 py-3" required placeholder="Describe tus metas a largo plazo"></textarea>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Cómo piensas que te puedo ayudar?</label>
+                        <textarea name="help_how" rows="3" class="w-full px-4 py-3" required></textarea>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Cómo de importante es para ti conseguirlo?</label>
+                        <select name="importance" required class="w-full px-4 py-3">
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="Me gustaría">Me gustaría</option>
+                            <option value="Bastante importante">Bastante importante</option>
+                            <option value="Muy importante">Muy importante</option>
+                            <option value="Es mi prioridad">Es mi prioridad</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Por qué crees que debería elegirte para entrar en el team?</label>
+                        <textarea name="why_choose_you" rows="3" class="w-full px-4 py-3" required></textarea>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Cuánto estarías dispuesto a invertir en € al mes en la asesoría para conseguirlo?</label>
+                        <input type="text" name="investment" required class="w-full px-4 py-3" placeholder="Ej: 100€">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Número de teléfono</label>
+                            <input type="tel" name="phone" required class="w-full px-4 py-3" placeholder="+34 000 000 000">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Email</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3" placeholder="tu@email.com">
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-3 pt-2">
+                        <input type="checkbox" id="data_consent" name="data_consent" required class="custom-checkbox mt-1">
+                        <label for="data_consent" class="text-xs text-gray-400 leading-relaxed cursor-pointer">
+                            Acepto que mis datos sean utilizados para ponerse en contacto conmigo y recibir información detallada acerca del servicio de asesoría.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full btn-primary text-white font-black uppercase py-5 rounded-xl text-sm shadow-xl mb-8">
+                        Reservar mi plaza
+                    </button>
+
+                    <div class="flex justify-center pt-8">
+                        <img src="https://i.ibb.co/KjCCZP9c/IMG-3719.jpg" alt="JPUELLES Motivación" class="content-image">
+                    </div>
+                </form>
+
+                <div id="successMsg" class="hidden text-center py-10">
+                    <h3 class="text-2xl font-black text-red-600 mb-2 uppercase italic">¡SOLICITUD ENVIADA!</h3>
+                    <p class="text-gray-400">He recibido tus datos. Revisaré tu caso personalmente y te contactaré lo antes posible.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nueva Sección Galería Desplegable -->
+    <section class="py-12 bg-black border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <button id="toggleGallery" class="w-full py-6 flex items-center justify-center space-x-3 group transition-all">
+                <span class="text-4xl font-black italic uppercase tracking-tighter">VER <span class="text-red-600">GALERÍA</span></span>
+                <i class="fas fa-chevron-down text-2xl group-hover:translate-y-1 transition-transform"></i>
+            </button>
+
+            <div id="galleryContent" class="hidden pt-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="gallery-item" onclick="openLightbox(0)">
+                        <img src="https://i.ibb.co/fY2nvDkS/IMG-3722.jpg" class="w-full h-80 object-cover" alt="Galería 1">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic">CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(1)">
+                        <img src="https://i.ibb.co/1YVTGVp8/IMG-3723.jpg" class="w-full h-80 object-cover" alt="Galería 2">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic">CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(2)">
+                        <img src="https://i.ibb.co/VY6dkjBF/IMG-3724.jpg" class="w-full h-80 object-cover" alt="Galería 3">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic">CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(3)">
+                        <img src="https://i.ibb.co/gbxgxPxn/IMG-3718.jpg" class="w-full h-80 object-cover" alt="Galería 4">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic text-center">PREPARACIÓN CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(4)">
+                        <img src="https://i.ibb.co/MyqYh4Df/IMG-3720.jpg" class="w-full h-80 object-cover" alt="Galería 5">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic text-center">PREPARACIÓN CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(5)">
+                        <img src="https://i.ibb.co/ycVntkS8/IMG-3727.jpg" class="w-full h-80 object-cover" alt="Galería 6">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic text-center">PREPARACIÓN CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(6)">
+                        <img src="https://i.ibb.co/Pks996s/IMG-3725.jpg" class="w-full h-80 object-cover" alt="Galería 7">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic text-center">TARRAGONA WNBF MENS PHYSIQUE 2025</div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox(7)">
+                        <img src="https://i.ibb.co/KjCCZP9c/IMG-3719.jpg" class="w-full h-80 object-cover" alt="Galería 8">
+                        <div class="gallery-overlay bg-black/60 font-black text-xs uppercase italic">PREPARACIÓN MENS PHYSIQUE 2025</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+        <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white text-4xl hover:text-red-600 transition z-[1010]"><i class="fas fa-times"></i></button>
+        <button onclick="prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-5xl transition z-[1010] p-4"><i class="fas fa-chevron-left"></i></button>
+        <button onclick="nextImage()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-5xl transition z-[1010] p-4"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-img-container flex flex-col items-center">
+            <img id="lightboxImg" class="lightbox-img" src="" alt="Vista ampliada">
+            <div id="lightboxCaption" class="mt-6 text-center text-white font-black uppercase italic tracking-wider text-lg px-4"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-zinc-950 border-t border-white/5 text-center px-6">
+        <img src="https://i.ibb.co/bgr9L1Qc/Untitled-design.jpg" alt="JPUELLES Avatar" class="footer-avatar">
+        <div class="text-2xl font-black italic mb-8">
+            <span class="text-white">JP</span><span class="text-red-600">UELLES</span>
+        </div>
+        <div class="flex justify-center space-x-8 mb-8">
+            <a href="https://www.instagram.com/anderbasurto?igsh=YWhldWY0bTUzN3d0" target="_blank" class="text-gray-500 hover:text-white transition"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="https://www.tiktok.com/@ander.basurto.wnb?_r=1&_t=ZN-937IkmIJdlG" target="_blank" class="text-gray-500 hover:text-white transition"><i class="fab fa-tiktok fa-lg"></i></a>
+            <a href="https://wa.me/34688849767" target="_blank" class="text-gray-500 hover:text-white transition"><i class="fab fa-whatsapp fa-lg"></i></a>
+        </div>
+        <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold">
+            © 2024 JPUELLES TEAM | MEN'S PHYSIQUE WNBF
+        </p>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('toggleGallery');
+        const galleryContent = document.getElementById('galleryContent');
+        toggleBtn.addEventListener('click', () => {
+            galleryContent.classList.toggle('hidden');
+            const icon = toggleBtn.querySelector('i');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        });
+
+        const galleryImages = [
+            { url: "https://i.ibb.co/fY2nvDkS/IMG-3722.jpg", caption: "CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
+            { url: "https://i.ibb.co/1YVTGVp8/IMG-3723.jpg", caption: "CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
+            { url: "https://i.ibb.co/VY6dkjBF/IMG-3724.jpg", caption: "CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
+            { url: "https://i.ibb.co/gbxgxPxn/IMG-3718.jpg", caption: "PREPARACIÓN CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
+            { url: "https://i.ibb.co/MyqYh4Df/IMG-3720.jpg", caption: "PREPARACIÓN CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
+            { url: "https://i.ibb.co/ycVntkS8/IMG-3727.jpg", caption: "PREPARACIÓN CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
+            { url: "https://i.ibb.co/Pks996s/IMG-3725.jpg", caption: "TARRAGONA WNBF MENS PHYSIQUE 2025" },
+            { url: "https://i.ibb.co/KjCCZP9c/IMG-3719.jpg", caption: "PREPARACIÓN MENS PHYSIQUE 2025" }
+        ];
+
+        let currentImgIndex = 0;
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+
+        function openLightbox(index) {
+            currentImgIndex = index;
+            updateLightbox();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        function updateLightbox() {
+            lightboxImg.src = galleryImages[currentImgIndex].url;
+            lightboxCaption.innerText = galleryImages[currentImgIndex].caption;
+        }
+        function nextImage() {
+            currentImgIndex = (currentImgIndex + 1) % galleryImages.length;
+            updateLightbox();
+        }
+        function prevImage() {
+            currentImgIndex = (currentImgIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateLightbox();
+        }
+
+        const track1 = document.getElementById('carouselTrack1');
+        let index1 = 0;
+        setInterval(() => {
+            index1 = (index1 + 1) % 3;
+            track1.style.transform = `translateX(-${index1 * 100}%)`;
+        }, 4000);
+
+        const track2 = document.getElementById('carouselTrack2');
+        let index2 = 0;
+        setInterval(() => {
+            index2 = (index2 + 1) % 3;
+            track2.style.transform = `translateX(-${index2 * 100}%)`;
+        }, 4000);
+
+        document.getElementById('teamForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.classList.add('opacity-50');
+            this.style.pointerEvents = 'none';
+            setTimeout(() => {
+                this.classList.add('hidden');
+                document.getElementById('successMsg').classList.remove('hidden');
+                document.getElementById('aplicar').scrollIntoView({behavior: 'smooth'});
+            }, 1000);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const element = document.querySelector(this.getAttribute('href'));
+                if (element) {
+                    window.scrollTo({
+                        top: element.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
