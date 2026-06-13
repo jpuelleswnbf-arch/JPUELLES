@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JPUELLES | Asesorías 1 a 1 - Men's Physique WNBF</title>
+    <!-- Favicon Solicitado -->
+    <link rel="icon" type="image/png" href="LOGO JPUELLES.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -23,7 +26,7 @@
         }
 
         .hero-image {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('definicionfrontal.PNG');
             background-size: cover;
             background-position: center;
         }
@@ -179,6 +182,12 @@
             border-radius: 0.5rem;
             object-fit: contain;
         }
+
+        /* Select custom styling for dark mode appearance */
+        select option {
+            background: #0a0a0a !important;
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body>
@@ -224,7 +233,7 @@
         </div>
     </section>
 
-    <!-- Carrusel de imágenes Superior -->
+    <!-- Biografía -->
     <div class="bg-black pt-24 px-6 text-center">
         <div class="carousel-container mb-8">
             <div class="carousel-track" id="carouselTrack1">
@@ -349,49 +358,31 @@
             </div>
 
             <div class="glass-card p-8 md:p-12 border-red-600/30">
-                <form id="teamForm" class="space-y-8">
+                <!-- Iframe oculto para procesar el envío sin recargar la página -->
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { document.getElementById('success-modal').classList.remove('hidden'); document.getElementById('teamForm').reset(); submitted = false; }"></iframe>
+                
+                <form id="teamForm" action="https://docs.google.com/forms/d/e/1FAIpQLScCV5tdjoReIGzP5fn963C592KTc01M9TejN_WdwCf-dr4_Vw/formResponse" method="POST" target="hidden_iframe" onsubmit="submitted=true;" class="space-y-8">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Nombre</label>
-                            <input type="text" name="name" required class="w-full px-4 py-3" placeholder="Tu nombre">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Nombre y apellidos</label>
+                            <input type="text" name="entry.80650129" required class="w-full px-4 py-3" placeholder="Tu nombre y apellidos">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Qué edad tienes?</label>
-                            <input type="number" name="age" required class="w-full px-4 py-3" placeholder="Edad">
-                        </div>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Dónde vives?</label>
-                            <input type="text" name="location" required class="w-full px-4 py-3" placeholder="Ciudad / País">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿A qué te dedicas?</label>
-                            <input type="text" name="occupation" required class="w-full px-4 py-3" placeholder="Tu profesión">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Edad</label>
+                            <input type="number" name="entry.847506510" required class="w-full px-4 py-3" placeholder="Edad">
                         </div>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Qué objetivo tienes?</label>
-                        <input type="text" name="objective_short" required class="w-full px-4 py-3" placeholder="Ej: Ganar 5kg de masa muscular">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Objetivo</label>
+                        <input type="text" name="entry.23062260" required class="w-full px-4 py-3" placeholder="Ej: Ganar masa muscular, definición...">
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Qué te gustaría conseguir con la asesoría?</label>
-                        <textarea name="expectations" rows="3" class="w-full px-4 py-3" required placeholder="Describe tus metas a largo plazo"></textarea>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Cómo piensas que te puedo ayudar?</label>
-                        <textarea name="help_how" rows="3" class="w-full px-4 py-3" required></textarea>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Cómo de importante es para ti conseguirlo?</label>
-                        <select name="importance" required class="w-full px-4 py-3">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Cómo de importante es para ti?</label>
+                        <select name="entry.1502563542" required class="w-full px-4 py-3 bg-[#0a0a0a] text-white">
                             <option value="" disabled selected>Selecciona una opción</option>
-                            <option value="Me gustaría">Me gustaría</option>
+                            <option value="Me gustaria">Me gustaria</option>
                             <option value="Bastante importante">Bastante importante</option>
                             <option value="Muy importante">Muy importante</option>
                             <option value="Es mi prioridad">Es mi prioridad</option>
@@ -399,23 +390,18 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Por qué crees que debería elegirte para entrar en el team?</label>
-                        <textarea name="why_choose_you" rows="3" class="w-full px-4 py-3" required></textarea>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">¿Cuánto estarías dispuesto a invertir en € al mes en la asesoría para conseguirlo?</label>
-                        <input type="text" name="investment" required class="w-full px-4 py-3" placeholder="Ej: 100€">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Grado de compromiso contigo y con el plan</label>
+                        <textarea name="entry.157038992" rows="3" class="w-full px-4 py-3" required placeholder="Describe tu nivel de compromiso actual"></textarea>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Número de teléfono</label>
-                            <input type="tel" name="phone" required class="w-full px-4 py-3" placeholder="+34 000 000 000">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Teléfono</label>
+                            <input type="tel" name="entry.1455910773" required class="w-full px-4 py-3" placeholder="+34 000 000 000">
                         </div>
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Email</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3" placeholder="tu@email.com">
+                            <input type="email" name="entry.339883795" required class="w-full px-4 py-3" placeholder="tu@email.com">
                         </div>
                     </div>
 
@@ -434,16 +420,11 @@
                         <img src="https://i.ibb.co/KjCCZP9c/IMG-3719.jpg" alt="JPUELLES Motivación" class="content-image">
                     </div>
                 </form>
-
-                <div id="successMsg" class="hidden text-center py-10">
-                    <h3 class="text-2xl font-black text-red-600 mb-2 uppercase italic">¡SOLICITUD ENVIADA!</h3>
-                    <p class="text-gray-400">He recibido tus datos. Revisaré tu caso personalmente y te contactaré lo antes posible.</p>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Nueva Sección Galería Desplegable -->
+    <!-- Galería Desplegable -->
     <section class="py-12 bg-black border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <button id="toggleGallery" class="w-full py-6 flex items-center justify-center space-x-3 group transition-all">
@@ -490,7 +471,7 @@
         </div>
     </section>
 
-    <!-- Sección Motivacional con Fondo Rojo -->
+    <!-- Frase motivacional -->
     <section class="py-16 bg-red-600 text-center">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter leading-tight text-black">
@@ -511,6 +492,18 @@
         </div>
     </div>
 
+    <!-- Modal de éxito para Google Forms -->
+    <div id="success-modal" class="fixed inset-0 z-[110] hidden bg-black/90 flex items-center justify-center transition-opacity duration-300">
+        <div class="bg-white p-8 md:p-12 text-center relative max-w-md w-[90%] border-t-4 border-red-600 shadow-2xl">
+            <button onclick="closeSuccessModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-red-600 transition text-2xl font-bold">&times;</button>
+            <div class="w-16 h-16 bg-red-600 text-white flex items-center justify-center rounded-full mx-auto mb-6">
+                <i class="fas fa-check text-2xl"></i>
+            </div>
+            <h3 class="text-3xl font-black uppercase tracking-[-0.05em] mb-4 text-black">¡RECIBIDO!</h3>
+            <p class="text-zinc-600 font-medium text-lg">Gracias, en breve nos pondremos en contacto contigo.</p>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-16 bg-zinc-950 border-t border-white/5 text-center px-6">
         <img src="https://i.ibb.co/bgr9L1Qc/Untitled-design.jpg" alt="JPUELLES Avatar" class="footer-avatar">
@@ -521,9 +514,9 @@
             <span class="text-white">Shut up,</span> <span class="text-red-600">I’m working on my dreams</span>
         </div>
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://www.instagram.com/anderbasurto?igsh=YWhldWY0bTUzN3d0" target="_blank" class="text-gray-500 hover:text-white transition"><i class="fab fa-instagram fa-lg"></i></a>
-            <a href="https://www.tiktok.com/@ander.basurto.wnb?_r=1&_t=ZN-937IkmIJdlG" target="_blank" class="text-gray-500 hover:text-white transition"><i class="fab fa-tiktok fa-lg"></i></a>
-            <a href="https://wa.me/34688849767" target="_blank" class="text-gray-500 hover:text-white transition"><i class="fab fa-whatsapp fa-lg"></i></a>
+            <a href="https://www.instagram.com/jpuelles.wnbf?igsh=M3dwdndoMzIzMHg1&utm_source=qr" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition"><i class="fab fa-instagram fa-lg"></i></a>
+            <a href="https://www.tiktok.com/@jpuelles.wnbf?_r=1&_t=ZN-96Dkhfmz5Lr" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition"><i class="fab fa-tiktok fa-lg"></i></a>
+            <a href="https://wa.me/34618207730?text=Hola,%20cu%C3%A9ntame%20mas%20sobre%20JPuelles%20TEAM" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition"><i class="fab fa-whatsapp fa-lg"></i></a>
         </div>
         <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold mt-1">
             © 2026 JPUELLES TEAM | NATURAL MEN'S PHYSIQUE WNBF
@@ -531,6 +524,7 @@
     </footer>
 
     <script>
+        // Control de Galería Desplegable
         const toggleBtn = document.getElementById('toggleGallery');
         const galleryContent = document.getElementById('galleryContent');
         toggleBtn.addEventListener('click', () => {
@@ -540,6 +534,7 @@
             icon.classList.toggle('fa-chevron-up');
         });
 
+        // Imágenes e información de Lightbox
         const galleryImages = [
             { url: "https://i.ibb.co/4R9ttfKc/Dise-o-sin-t-tulo-1.png", caption: "CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
             { url: "https://i.ibb.co/1YVTGVp8/IMG-3723.jpg", caption: "CAMPEONATO DE ESPAÑA WNBF MENS PHYSIQUE 2025" },
@@ -579,31 +574,32 @@
             updateLightbox();
         }
 
+        // Carrusel 1 Animación Automática
         const track1 = document.getElementById('carouselTrack1');
         let index1 = 0;
         setInterval(() => {
             index1 = (index1 + 1) % 3;
-            track1.style.transform = `translateX(-${index1 * 100}%)`;
+            if(track1) track1.style.transform = `translateX(-${index1 * 100}%)`;
         }, 4000);
 
+        // Carrusel 2 Animación Automática
         const track2 = document.getElementById('carouselTrack2');
         let index2 = 0;
         setInterval(() => {
             index2 = (index2 + 1) % 3;
-            track2.style.transform = `translateX(-${index2 * 100}%)`;
+            if(track2) track2.style.transform = `translateX(-${index2 * 100}%)`;
         }, 4000);
 
-        document.getElementById('teamForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            this.classList.add('opacity-50');
-            this.style.pointerEvents = 'none';
-            setTimeout(() => {
-                this.classList.add('hidden');
-                document.getElementById('successMsg').classList.remove('hidden');
-                document.getElementById('aplicar').scrollIntoView({behavior: 'smooth'});
-            }, 1000);
-        });
+        // Lógica de Envío e Intercepción de Google Forms 
+        let submitted = false;
 
+        function closeSuccessModal() {
+            const successModal = document.getElementById('success-modal');
+            successModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Scroll Suave para los Enlaces Internos
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -619,4 +615,3 @@
     </script>
 </body>
 </html>
-
